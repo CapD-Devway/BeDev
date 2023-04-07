@@ -27,9 +27,6 @@ public class Project extends BaseTimeEntity {
     @Column
     private String content;
 
-    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
-    private List<Post> posts = new ArrayList<>();
-
 
 
 }

@@ -31,9 +31,6 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "posts", cascade = CascadeType.REMOVE)
-    private List<Tag> tag = new ArrayList<>();
-
     @Column(nullable = false)
     private String title;
 
