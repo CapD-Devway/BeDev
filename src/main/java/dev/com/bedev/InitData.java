@@ -24,6 +24,16 @@ public class InitData {
                 .password("1111")
                 .name("서명진")
                 .build();
+        User user1 = User.builder()
+                .email("userA@naver.com")
+                .password("2222")
+                .name("사용자A")
+                .build();
+        User user2 = User.builder()
+                .email("userB@naver.com")
+                .password("3333")
+                .name("사용자B")
+                .build();
 
 
         em.persist(user);
