@@ -34,6 +34,7 @@ public class Post extends BaseTimeEntity {
     @Column(nullable = false)
     private String title;
 
+    @Lob
     @Column(nullable = false)
     private String content;
 
@@ -45,4 +46,11 @@ public class Post extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String stack;
+
+    // 제목 및 내용 수정
+    public void update(String title, String content, String stack) {
+        this.title = title;
+        this.content = content;
+        this.stack = stack;
+    }
 }
