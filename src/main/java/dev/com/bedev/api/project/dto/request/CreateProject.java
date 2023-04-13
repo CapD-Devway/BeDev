@@ -1,10 +1,9 @@
-package dev.com.bedev.api.project.dto.respone;
+package dev.com.bedev.api.project.dto.request;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
-@Builder
-@Data
+@Getter
 public class CreateProject {
     private String teamName;
     private String teamContent;
