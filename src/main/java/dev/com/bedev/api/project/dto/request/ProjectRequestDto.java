@@ -4,7 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 
 @Getter
-public class CreateProject {
+public class ProjectRequestDto {
     private String teamName;
     private String teamContent;
 }
