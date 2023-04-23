@@ -1,5 +1,8 @@
+
 package dev.com.bedev;
+import dev.com.bedev.domain.category.Category;
 import dev.com.bedev.domain.post.Post;
+import dev.com.bedev.domain.project.Project;
 import dev.com.bedev.domain.user.User;
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
@@ -27,7 +30,22 @@ public class InitData {
                     .name("서명진")
                     .build();
 
+            Project project = Project.builder()
+                                    .name("testpj")
+                                    .content("123")
+                                    .build();
+            Post post = Post.builder()
+                            .title("test")
+                            .content("test")
+                            .stack("back")
+                            .category(Category.TEAM)
+                            .views("0")
+                            .stack("back")
+                            .build();
+
             em.persist(user);
+            em.persist(project);
+            em.persist(post);
             tx.commit();
         }catch(Exception e) {
             tx.rollback();
