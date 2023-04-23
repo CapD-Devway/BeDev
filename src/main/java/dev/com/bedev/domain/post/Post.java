@@ -8,6 +8,7 @@ import dev.com.bedev.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,4 +54,16 @@ public class Post extends BaseTimeEntity {
         this.content = content;
         this.stack = stack;
     }
+
+    //연관관계 메서드
+    public void associateUser(User user) {
+        this.user = user;
+        user.getPosts().add(this);
+    }
+
+    public void associateProject(Project project) {
+        this.project = project;
+        project.getPosts().add(this);
+    }
+
 }
