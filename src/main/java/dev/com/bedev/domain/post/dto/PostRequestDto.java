@@ -18,8 +18,9 @@ import java.time.LocalDateTime;
 public class PostRequestDto {
 
     private Long id;
-    private Project project;
-    private User user;
+    private Long projectId;
+    private Long userId;
+    //private User user;
     private String title;
     private String content;
     private Category category;
@@ -31,8 +32,6 @@ public class PostRequestDto {
     public Post toEntity() {
         Post post = Post.builder()
                 .id(id)
-                .project(project)
-                .user(user)
                 .title(title)
                 .content(content)
                 .category(category)
