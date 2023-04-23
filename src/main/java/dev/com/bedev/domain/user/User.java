@@ -1,5 +1,6 @@
 package dev.com.bedev.domain.user;
 
+import dev.com.bedev.domain.UserProject;
 import dev.com.bedev.domain.date.BaseTimeEntity;
 import dev.com.bedev.domain.post.Post;
 import jakarta.persistence.*;
@@ -30,5 +31,6 @@ public class User extends BaseTimeEntity {
     private String name;
 
 
-
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
 }
