@@ -1,6 +1,7 @@
 package dev.com.bedev.api.project.controller;
 
 import dev.com.bedev.api.project.dto.request.ProfileRequestDto;
+import dev.com.bedev.api.project.dto.response.ProfileResponseDto;
 import dev.com.bedev.api.project.service.ProfileService;
 import dev.com.bedev.domain.profile.Profile;
 import dev.com.bedev.domain.project.Project;
@@ -21,7 +22,8 @@ public class ProfileController {
     @PostMapping("/api/profile")
     public ResponseEntity<?> createProject(@RequestBody ProfileRequestDto profileRequestDto){
         Profile profile = profileService.createProject(profileRequestDto);
-        return ResponseEntity.ok().body(profile);
+        ProfileResponseDto profileResponseDto = ProfileResponseDto.from(profile);
+        return ResponseEntity.ok().body(profileResponseDto);
 
     }
 }
