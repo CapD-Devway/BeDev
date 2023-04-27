@@ -1,8 +1,11 @@
 package dev.com.bedev.domain.profile;
 
 import dev.com.bedev.domain.date.BaseTimeEntity;
+import dev.com.bedev.domain.enums.DevelopmentPart;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Set;
 
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -29,11 +32,10 @@ public class Profile extends BaseTimeEntity {
     @Column(nullable = false)
     private String email;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String phoneNumber;
-
-    @Column(nullable = false)
-    private String developmentPart;
+    private Set<DevelopmentPart> developmentPart;
 
     @Column(nullable = false)
     private String developTool;
@@ -45,8 +47,6 @@ public class Profile extends BaseTimeEntity {
     private String name;
 
 
-    @Column
-    private String content;
 
 
 
