@@ -8,9 +8,12 @@ import dev.com.bedev.domain.project.Project;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -20,10 +23,16 @@ public class ProfileController {
     private final ProfileService profileService;
 
     @PostMapping("/api/profile")
-    public ResponseEntity<?> createProject(@RequestBody ProfileRequestDto profileRequestDto){
+    public ResponseEntity<?> createProfile(@RequestBody ProfileRequestDto profileRequestDto){
         Profile profile = profileService.createProject(profileRequestDto);
         ProfileResponseDto profileResponseDto = ProfileResponseDto.from(profile);
         return ResponseEntity.ok().body(profileResponseDto);
 
+    }
+
+    @GetMapping("/api/profile")
+    public ResponseEntity<?> viewProfile(){
+        List<Profile> profiles = profileService.view();
+        return ResponseEntity.ok().body(profiles);
     }
 }

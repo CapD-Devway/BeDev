@@ -1,9 +1,12 @@
 package dev.com.bedev.api.project.dto.response;
 
+import dev.com.bedev.domain.enums.DevelopmentPart;
 import dev.com.bedev.domain.profile.Profile;
 import dev.com.bedev.domain.project.Project;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.Set;
 
 @Builder
 @Data
@@ -17,9 +20,7 @@ public class ProfileResponseDto {
 
     private String email;
 
-    private String phoneNumber;
-
-    private String developmentPart;
+    private Set<DevelopmentPart> developmentPart;
 
     private String developTool;
 
@@ -34,7 +35,6 @@ public class ProfileResponseDto {
                 .schoolId(profile.getSchoolId())
                 .department(profile.getDepartment())
                 .email(profile.getEmail())
-                .phoneNumber(profile.getPhoneNumber())
                 .developmentPart(profile.getDevelopmentPart())
                 .developTool(profile.getDevelopTool())
                 .introduce(profile.getIntroduce())
