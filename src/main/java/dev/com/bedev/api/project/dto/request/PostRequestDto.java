@@ -1,4 +1,4 @@
-package dev.com.bedev.domain.post.dto;
+package dev.com.bedev.api.project.dto.request;
 
 import dev.com.bedev.domain.category.Category;
 import dev.com.bedev.domain.post.Post;

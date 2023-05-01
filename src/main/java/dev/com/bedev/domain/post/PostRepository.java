@@ -1,4 +1,4 @@
-package dev.com.bedev.domain.post.repository;
+package dev.com.bedev.domain.post;
 
 import dev.com.bedev.domain.post.Post;
 import org.springframework.data.jpa.repository.JpaRepository;

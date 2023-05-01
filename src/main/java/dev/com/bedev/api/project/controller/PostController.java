@@ -1,8 +1,8 @@
-package dev.com.bedev.domain.post.controller;
+package dev.com.bedev.api.project.controller;
 
-import dev.com.bedev.domain.post.dto.PostRequestDto;
-import dev.com.bedev.domain.post.dto.PostResponseDto;
-import dev.com.bedev.domain.post.service.PostService;
+import dev.com.bedev.api.project.dto.request.PostRequestDto;
+import dev.com.bedev.api.project.dto.response.PostResponseDto;
+import dev.com.bedev.api.project.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

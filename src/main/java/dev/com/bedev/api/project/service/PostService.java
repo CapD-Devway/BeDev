@@ -1,9 +1,9 @@
-package dev.com.bedev.domain.post.service;
+package dev.com.bedev.api.project.service;
 
 import dev.com.bedev.domain.post.Post;
-import dev.com.bedev.domain.post.dto.PostRequestDto;
-import dev.com.bedev.domain.post.dto.PostResponseDto;
-import dev.com.bedev.domain.post.repository.PostRepository;
+import dev.com.bedev.api.project.dto.request.PostRequestDto;
+import dev.com.bedev.api.project.dto.response.PostResponseDto;
+import dev.com.bedev.domain.post.PostRepository;
 import dev.com.bedev.domain.project.Project;
 import dev.com.bedev.domain.project.ProjectRepository;
 import dev.com.bedev.domain.user.User;
