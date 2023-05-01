@@ -11,20 +11,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 @RequiredArgsConstructor
-@RequestMapping
+@RestController
+@RequestMapping("/api/project")
 public class ProjectController {
 
     private final ProjectService projectService;
-    @PostMapping("api/project")
-    public ResponseEntity<?> createProject(@RequestBody ProjectRequestDto projectRequestDto){
-        Project project = projectService.createProject(projectRequestDto);
-        ProjectResponseDto projectResponseDto = ProjectResponseDto.builder()
-                .id(project.getId())
-                .teamContent(project.getContent())
-                .teamName(project.getName())
-                .build();
-        return ResponseEntity.ok().body(projectResponseDto);
+
+    @PostMapping("/create")
+    public ResponseEntity<Long> createProject(@RequestBody ProjectRequestDto projectRequestDto) {
+        Long projectId = projectService.createProject(projectRequestDto);
+        return ResponseEntity.ok(projectId);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProjectResponseDto>> findAllProjects() {
+        List<ProjectResponseDto> projects = projectService.findAllProjects();
+        return ResponseEntity.ok(projects);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ProjectResponseDto> findProjectById(@PathVariable Long id) {
+        ProjectResponseDto project = projectService.findById(id);
+        return ResponseEntity.ok(project);
     }
 }
