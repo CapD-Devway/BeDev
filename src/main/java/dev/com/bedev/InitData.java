@@ -1,5 +1,6 @@
 
 package dev.com.bedev;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import dev.com.bedev.domain.category.Category;
 import dev.com.bedev.domain.post.Post;
 import dev.com.bedev.domain.project.Project;
@@ -20,6 +21,7 @@ public class InitData {
     public void init(){
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         try {
             tx.begin();
 
