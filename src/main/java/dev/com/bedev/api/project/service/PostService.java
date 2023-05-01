@@ -1,5 +1,6 @@
 package dev.com.bedev.api.project.service;
 
+import dev.com.bedev.api.condition.PostSearchCondition;
 import dev.com.bedev.domain.post.Post;
 import dev.com.bedev.api.project.dto.request.PostRequestDto;
 import dev.com.bedev.api.project.dto.response.PostResponseDto;
@@ -9,6 +10,8 @@ import dev.com.bedev.domain.project.ProjectRepository;
 import dev.com.bedev.domain.user.User;
 import dev.com.bedev.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,10 +29,10 @@ public class PostService {
     private final UserRepository userRepository;
     private final ProjectRepository projectRepository;
 
-
-    public List<PostResponseDto> findAll() {
-        List<Post> posts = postRepository.findAll();
-        return posts.stream().map(PostResponseDto::new).collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    public Page<PostResponseDto> findAll(Pageable pageable) {
+        Page<Post> posts = postRepository.findAll(pageable);
+        return posts.map(PostResponseDto::new);
     }
 
     //Create
@@ -69,5 +72,11 @@ public class PostService {
                 new IllegalArgumentException("해당하는 게시글이 없습니다."));
 
         postRepository.delete(post);
+    }
+
+    //검색 기능 추가
+    public Page<PostResponseDto> getSearchPosts(PostSearchCondition searchCondition, Pageable pageable) {
+        Page<Post> posts = postRepository.searchPosts(searchCondition, pageable);
+        return posts.map(PostResponseDto::new);
     }
 }
