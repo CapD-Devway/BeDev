@@ -1,10 +1,24 @@
 package dev.com.bedev.api.project.dto.request;
 
-import lombok.Data;
-import lombok.Getter;
+import dev.com.bedev.domain.project.Project;
+import lombok.*;
 
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class ProjectRequestDto {
-    private String teamName;
-    private String teamContent;
+
+    private Long id;
+    private String name;
+    private String content;
+
+    public Project toEntity() {
+        Project project = Project.builder()
+                .id(id)
+                .name(name)
+                .content(content)
+                .build();
+
+        return project;
+    }
 }
