@@ -32,5 +32,6 @@ public class User extends BaseTimeEntity {
 
 
     @OneToMany(mappedBy = "user")
+    @Builder.Default
     private List<Post> posts = new ArrayList<>();
 }
