@@ -1,5 +1,6 @@
 package dev.com.bedev.domain.project;
 
+import dev.com.bedev.domain.UserProject;
 import dev.com.bedev.domain.date.BaseTimeEntity;
 import dev.com.bedev.domain.post.Post;
 import jakarta.persistence.*;
@@ -27,6 +28,10 @@ public class Project extends BaseTimeEntity {
     @Column
     private String content;
 
+    @OneToMany(mappedBy = "project")
+    private List<Post> posts = new ArrayList<>();
 
+    @OneToMany(mappedBy = "project")
+    private List<UserProject> userProjects = new ArrayList<>();
 
 }
