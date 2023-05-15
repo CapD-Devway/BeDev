@@ -49,13 +49,17 @@ public class JwtFilter extends OncePerRequestFilter {
 
         try{
             UserDetails user = userDetailsService.loadUserByUsername(decodedToken.getUid());
+            log.info(user.getUsername());
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     user, null, user.getAuthorities());
+            log.info(authentication.getName());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
         } catch(NoSuchElementException e){
             response.setStatus(HttpStatus.SC_UNAUTHORIZED);
             response.setContentType("application/json");
             response.getWriter().write("{\"code\":\"USER_NOT_FOUND\"}");
+
             return;
         }
         filterChain.doFilter(request, response);
