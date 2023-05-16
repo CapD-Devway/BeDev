@@ -23,9 +23,8 @@ public class User extends BaseTimeEntity implements UserDetails {
     @Column(nullable = false)
     private String email;
 
-
-    @Column(nullable = false)
-    private String nickname;
+    @Column
+    private String picture;
     @Id
     @Column(nullable = false)
     private String userName;

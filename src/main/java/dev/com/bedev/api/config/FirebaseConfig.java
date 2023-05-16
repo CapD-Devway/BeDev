@@ -16,23 +16,20 @@ import java.io.IOException;
 public class FirebaseConfig {
 
     @Value("${app.firebase-file}")
-    private String FileName;
-
+    private String firebaseKey;
     @Bean
-    public FirebaseApp firebaseApp() throws IOException {
-
+    public FirebaseAuth firebaseAuth() throws IOException {
+        System.out.println("Initializing Firebase.");
         FileInputStream serviceAccount =
-                new FileInputStream(FileName);
-        FirebaseOptions options = new FirebaseOptions.Builder()
+                new FileInputStream(firebaseKey);
+
+        FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
-        return FirebaseApp.initializeApp(options);
 
-
+        FirebaseApp.initializeApp(options);
+        return FirebaseAuth.getInstance(FirebaseApp.getInstance());
     }
 
-    @Bean
-    public FirebaseAuth getFirebaseAuth() throws IOException {
-        return FirebaseAuth.getInstance(firebaseApp());
-    }
+
 }

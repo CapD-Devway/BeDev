@@ -28,7 +28,7 @@ public class SecurityConfig {
                 httpBasic().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/login").permitAll()
+                .requestMatchers("/login","/").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtFilter(userService, firebaseAuth), UsernamePasswordAuthenticationFilter.class);

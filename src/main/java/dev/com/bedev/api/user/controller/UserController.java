@@ -30,8 +30,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("")
-    public ResponseEntity<?> register(@RequestHeader("Authorization") String authorization,
-                             @RequestBody UserRequestDto requestDto) {
+    public UserResponseDto register(@RequestHeader("Authorization") String authorization) {
         // TOKEN을 가져온다.
         FirebaseToken decodedToken;
         try {
@@ -43,16 +42,13 @@ public class UserController {
         }
         // 사용자를 등록한다.
         User registeredUser = userService.register(
-                decodedToken.getUid(), decodedToken.getEmail(), requestDto.getNickname());
-
-        UserResponseDto userInfo = UserResponseDto.from(registeredUser);
-        return ResponseEntity.ok().body(userInfo);
+                decodedToken.getUid(), decodedToken.getEmail(),decodedToken.getPicture());
+        return UserResponseDto.from(registeredUser);
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponseDto>  getUserMe(Authentication authentication) {
+    public UserResponseDto  getUserMe(Authentication authentication) {
         User customUser = ((User) authentication.getPrincipal());
-        UserResponseDto userInfo = UserResponseDto.from(customUser);
-        return ResponseEntity.ok().body(userInfo);
+        return UserResponseDto.from(customUser);
     }
 }
