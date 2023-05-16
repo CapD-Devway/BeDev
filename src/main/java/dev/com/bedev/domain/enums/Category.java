@@ -1,4 +1,4 @@
-package dev.com.bedev.domain.category;
+package dev.com.bedev.domain.enums;
 
 import lombok.Getter;
 
