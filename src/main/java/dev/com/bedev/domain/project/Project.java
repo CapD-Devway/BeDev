@@ -28,10 +28,11 @@ public class Project extends BaseTimeEntity {
     @Column
     private String content;
 
+    /*
     @OneToMany(mappedBy = "project")
     private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "project")
     private List<UserProject> userProjects = new ArrayList<>();
-
+*/
 }
