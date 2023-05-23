@@ -49,7 +49,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
 
         try{
-            userService.register(decodedToken.getUid(),decodedToken.getEmail(),decodedToken.getPicture());
+            userService.register(decodedToken.getUid(),decodedToken.getEmail(),decodedToken.getPicture(),decodedToken.getName());
 
         } catch(NoSuchElementException e){
             UserDetails user = userService.loadUserByUsername(decodedToken.getUid());

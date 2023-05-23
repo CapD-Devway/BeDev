@@ -25,11 +25,12 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User register(String uid, String email,String picture) {
+    public User register(String uid, String email,String picture,String name) {
         User customUser = User.builder()
-                .userName(uid)
+                .userName(name)
                 .email(email)
                 .picture(picture)
+                .userId(uid)
                 .build();
         userRepository.save(customUser);
         return customUser;

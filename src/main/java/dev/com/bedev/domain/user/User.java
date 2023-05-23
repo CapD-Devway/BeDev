@@ -29,6 +29,8 @@ public class User extends BaseTimeEntity implements UserDetails {
     @Column(nullable = false)
     private String userName;
 
+    @Column
+    private String userId;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // TODO Auto-generated method stub

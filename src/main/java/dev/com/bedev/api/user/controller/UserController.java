@@ -42,7 +42,7 @@ public class UserController {
         }
         // 사용자를 등록한다.
         User registeredUser = userService.register(
-                decodedToken.getUid(), decodedToken.getEmail(),decodedToken.getPicture());
+                decodedToken.getUid(), decodedToken.getEmail(),decodedToken.getPicture(),decodedToken.getName());
         return UserResponseDto.from(registeredUser);
     }
 
