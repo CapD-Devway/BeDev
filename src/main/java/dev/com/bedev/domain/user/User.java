@@ -25,12 +25,15 @@ public class User extends BaseTimeEntity implements UserDetails {
 
     @Column
     private String picture;
-    @Id
+
+
+
     @Column(nullable = false)
     private String userName;
 
-    @Column
-    private String userId;
+    @Id
+    @Column(nullable = false)
+    private String id;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // TODO Auto-generated method stub
