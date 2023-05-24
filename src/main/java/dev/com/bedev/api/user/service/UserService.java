@@ -15,14 +15,11 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserDetailsService {
+public class UserService{
 
     private final UserRepository userRepository;
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findById(username).get();
-    }
+
 
     @Transactional
     public User register(String uid, String email,String picture,String name) {
@@ -30,7 +27,7 @@ public class UserService implements UserDetailsService {
                 .userName(name)
                 .email(email)
                 .picture(picture)
-                .userId(uid)
+                .id(uid)
                 .build();
         userRepository.save(customUser);
         return customUser;
