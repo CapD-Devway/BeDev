@@ -3,8 +3,6 @@ package dev.com.bedev.api.user.controller;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.auth.UserInfo;
-import dev.com.bedev.api.user.dto.request.UserRequestDto;
 import dev.com.bedev.api.user.dto.response.UserResponseDto;
 import dev.com.bedev.api.user.service.UserService;
 import dev.com.bedev.api.util.RequestUtil;
@@ -16,9 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 @Controller
 @RequiredArgsConstructor
@@ -47,8 +42,7 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public UserResponseDto  getUserMe(Authentication authentication) {
-        User customUser = ((User) authentication.getPrincipal());
-        return UserResponseDto.from(customUser);
+    public ResponseEntity<?>  test(Authentication authentication) {
+        return ResponseEntity.ok().body("a");
     }
 }
