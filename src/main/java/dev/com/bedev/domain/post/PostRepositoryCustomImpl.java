@@ -38,15 +38,11 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
         if (searchCondition.getContent() != null && !searchCondition.getContent().isEmpty()) {
             builder.or(post.content.containsIgnoreCase(searchCondition.getContent()));
         }
-        if (searchCondition.getProjectName() != null && !searchCondition.getProjectName().isEmpty()) {
-            builder.or(post.project.name.containsIgnoreCase(searchCondition.getProjectName()));
-        }
         if (searchCondition.getStack() != null && !searchCondition.getStack().isEmpty()) {
             builder.or(post.stack.containsIgnoreCase(searchCondition.getStack()));
         }
 
         List<Post> content = queryFactory.selectFrom(post)
-                .leftJoin(post.project, project)
                 .where(builder)
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -55,11 +51,9 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
         JPAQuery<Long> countQuery = queryFactory
                 .select(post.count())
                 .from(post)
-                .leftJoin(post.project, project)
                 .where(
                     titleEq(searchCondition.getTitle()),
                     contentEq(searchCondition.getContent()),
-                    projectNameEq(searchCondition.getProjectName()),
                     stackEq(searchCondition.getStack())
                 );
 
@@ -73,10 +67,6 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
 
     private BooleanExpression contentEq(String content) {
         return hasText(content) ? null : post.content.eq(content);
-    }
-
-    private BooleanExpression projectNameEq(String projectName) {
-        return hasText(projectName) ? null : project.name.eq(projectName);
     }
 
     private BooleanExpression stackEq(String stack) {

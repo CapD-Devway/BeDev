@@ -14,21 +14,5 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProjectRepositoryCustomImpl implements ProjectRepositoryCustom {
 
-    private final JPAQueryFactory jpaQueryFactory;
-
-    public PostRepositoryCustomImpl(JPAQueryFactory jpaQueryFactory) {
-        super(Post.class);
-        this.jpaQueryFactory = jpaQueryFactory;
-    }
-
-    @Override
-    public List<Post> searchPosts(String keyword) {
-        QPost post = QPost.post;
-
-        return jpaQueryFactory.selectFrom(Post)
-                .where(post.title.containsIgnoreCase(keyword))
-                .fetch();
-    }
-
 
 }

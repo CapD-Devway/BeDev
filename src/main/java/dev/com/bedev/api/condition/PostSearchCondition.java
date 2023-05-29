@@ -9,7 +9,7 @@ public class PostSearchCondition {
 
     private String title;
     private String content;
-    private String projectName;
+    //private String projectName;
     private String stack;
 
 }
