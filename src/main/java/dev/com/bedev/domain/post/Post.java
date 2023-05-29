@@ -1,7 +1,7 @@
 package dev.com.bedev.domain.post;
 
 import dev.com.bedev.domain.date.BaseTimeEntity;
-import dev.com.bedev.domain.category.Category;
+import dev.com.bedev.domain.enums.Category;
 import dev.com.bedev.domain.project.Project;
 import dev.com.bedev.domain.tag.Tag;
 import dev.com.bedev.domain.user.User;
