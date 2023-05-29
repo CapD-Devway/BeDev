@@ -11,10 +11,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@RequestMapping("/post")
+@RequestMapping("/teampost")
 @RestController
 @RequiredArgsConstructor
 public class PostController {
@@ -22,23 +23,15 @@ public class PostController {
     private final PostService postService;
 
     // 팀원 모집 글 - 피드형식
-    @GetMapping
+    @GetMapping("/all")
     public Page<PostResponseDto> getAllPosts(Pageable pageable) {
         return postService.findAll(pageable);
     }
 
-    /*메인 - 카테고리에 따른 분류 - cancel
-    @GetMapping("/category/{category}")
-    public ResponseEntity<List<PostResponseDto>> findByCategory(@PathVariable Category category) {
-        List<PostResponseDto> responseDtos = postService.findByCategory(category);
-        return ResponseEntity.ok(responseDtos);
-    }
-
-     */
 
     // Create
     @PostMapping("/write")
-    public ResponseEntity save(@RequestBody PostRequestDto postRequestDto) {
+    public ResponseEntity save(@ModelAttribute PostRequestDto postRequestDto) {
         return ResponseEntity.ok(postService.save(postRequestDto));
     }
 
@@ -50,7 +43,7 @@ public class PostController {
 
     // Update
     @PutMapping("/{id}")
-    public ResponseEntity update(@PathVariable Long id, @RequestBody PostRequestDto postRequestDto) {
+    public ResponseEntity update(@PathVariable Long id, @ModelAttribute PostRequestDto postRequestDto) {
         postService.update(id, postRequestDto);
         return ResponseEntity.ok(id);
     }
@@ -65,7 +58,7 @@ public class PostController {
     // 검색 결과
     @GetMapping
     public ResponseEntity<Page<PostResponseDto>> getSearchedPosts(
-            @PageableDefault(size = 20, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
             @ModelAttribute PostSearchCondition searchCondition) {
         Page<PostResponseDto> postList = postService.getSearchPosts(searchCondition, pageable);
         return ResponseEntity.ok(postList);
