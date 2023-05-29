@@ -1,4 +1,4 @@
-
+/*
 package dev.com.bedev;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import dev.com.bedev.domain.category.Category;
@@ -12,47 +12,58 @@ import jakarta.persistence.EntityTransaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Component
 @RequiredArgsConstructor
 public class InitData {
 
     private final EntityManagerFactory emf;
+
     @PostConstruct
-    public void init(){
+    public void init() {
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em);
         try {
             tx.begin();
 
-            //테스트용 계정 추가 + 시큐리티 추가전 => 개발단계 급속화를 위해
-            User user = User.builder()
-                    .email("smjsih@naver.com")
-                    .password("1111")
-                    .name("서명진")
-                    .build();
+            for (int i = 0; i < 50; i++) {
+                User user = User.builder()
+                        .email("user" + i + "@example.com")
+                        .password("1111")
+                        .name("User " + i)
+                        .build();
 
-            Project project = Project.builder()
-                                    .name("testpj")
-                                    .content("123")
-                                    .build();
-            Post post = Post.builder()
-                            .title("test")
-                            .content("test")
-                            .stack("back")
-                            .category(Category.TEAM)
-                            .views("0")
-                            .stack("back")
-                            .build();
+                em.persist(user);
 
-            em.persist(user);
-            em.persist(project);
-            em.persist(post);
+                for (int j = 0; j < 50; j++) {
+                    Post.PostBuilder postBuilder = Post.builder()
+                            .user(user)
+                            .title("Test post " + j)
+                            .content("Test content " + j)
+                            .stack("back")
+                            .createdDateTeam(LocalDateTime.parse("2023-05-16T15:30:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME))
+                            .description("Please" + j);
+
+                    if (j % 2 == 0) { // Include an image file for every other post
+                        File imgFile = new File("/path/to/image/file" + j + ".jpg");
+                        postBuilder.imgPath(imgFile.getAbsolutePath());
+                    }
+
+                    Post post = postBuilder.build();
+                    em.persist(post);
+                }
+            }
+
             tx.commit();
-        }catch(Exception e) {
+        } catch (Exception e) {
             tx.rollback();
-        }finally {
+        } finally {
             em.close();
         }
     }
 }
+*/
