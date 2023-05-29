@@ -14,20 +14,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-/*
-카테고리에 따른 게시판 분류 -> 팀원 모집 글
- */
 @Service
 @RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
     private final UserRepository userRepository;
-    private final ProjectRepository projectRepository;
+    private final FileService fileService;
+    //private final ProjectRepository projectRepository;
 
     @Transactional(readOnly = true)
     public Page<PostResponseDto> findAll(Pageable pageable) {
@@ -38,12 +37,12 @@ public class PostService {
     //Create
     @Transactional
     public Long save(PostRequestDto postRequestDto) {
-        User user = userRepository.findById(postRequestDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("해당하는 유저는 없습니다."));
-        Project project = projectRepository.findById(postRequestDto.getProjectId()).orElseThrow(()-> new IllegalArgumentException("해당 프로젝트는 없습니다."));
+        User user = userRepository.findById(postRequestDto.getUser_id()).orElseThrow(() -> new IllegalArgumentException("해당하는 유저는 없습니다."));
+        String imgPath = fileService.storeFile(postRequestDto.getImgPath());  // 이미지 파일 저장
+        Post post = postRequestDto.toEntity(user, imgPath);
 
-        Post post = postRequestDto.toEntity();
-        post.associateUser(user);
-        post.associateProject(project);
+        //Project project = projectRepository.findById(postRequestDto.getProjectId()).orElseThrow(()-> new IllegalArgumentException("해당 프로젝트는 없습니다."));
+        //post.associateProject(project);
 
         postRepository.save(post);
         return post.getId();
@@ -57,13 +56,17 @@ public class PostService {
         return new PostResponseDto(post);
     }
 
-    // update (dirty checking)
+
     @Transactional
     public void update(Long id, PostRequestDto postRequestDto) {
         Post post = postRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당하는 게시글이 없습니다."));
 
-        post.update(postRequestDto.getTitle(), postRequestDto.getContent(), postRequestDto.getStack());
+        String imgPath = null;
+        if (postRequestDto.getImgPath() != null && !postRequestDto.getImgPath().isEmpty()) {
+            imgPath = fileService.storeFile(postRequestDto.getImgPath());
+        }
+        post.update(postRequestDto.getTitle(), postRequestDto.getContent(), postRequestDto.getStack(), imgPath, postRequestDto.getCreatedDateTeam());
     }
 
     @Transactional
@@ -74,7 +77,9 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    //검색 기능 추가
+
+    //검색 기능
+    @Transactional(readOnly = true)
     public Page<PostResponseDto> getSearchPosts(PostSearchCondition searchCondition, Pageable pageable) {
         Page<Post> posts = postRepository.searchPosts(searchCondition, pageable);
         return posts.map(PostResponseDto::new);
