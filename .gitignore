@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 
 generated
+firebasekey.json
 
 ### STS ###
 .apt_generated
