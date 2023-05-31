@@ -2,17 +2,18 @@ package dev.com.bedev.domain.profile;
 
 import dev.com.bedev.domain.date.BaseTimeEntity;
 import dev.com.bedev.domain.enums.DevelopmentPart;
+import dev.com.bedev.domain.uploadfile.UploadFile;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Set;
 
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Getter
 @Entity
+@Builder
 public class Profile extends BaseTimeEntity {
 
     @Id
@@ -20,8 +21,9 @@ public class Profile extends BaseTimeEntity {
     @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false)
-    private String image;
+    @OneToOne
+    @JoinColumn(name = "uploadFile_id")
+    private UploadFile image;
 
     @Column(nullable = false)
     private String department;
@@ -45,8 +47,6 @@ public class Profile extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String name;
-
-
 
 
 

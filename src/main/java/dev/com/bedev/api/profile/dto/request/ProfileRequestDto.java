@@ -1,15 +1,19 @@
-package dev.com.bedev.api.project.dto.request;
+package dev.com.bedev.api.profile.dto.request;
 
 import dev.com.bedev.domain.enums.DevelopmentPart;
-import jakarta.persistence.Column;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class ProfileRequestDto {
 
-    private String image;
+    private MultipartFile image;
     
     private String department;
 

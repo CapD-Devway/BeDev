@@ -1,8 +1,8 @@
-package dev.com.bedev.api.project.dto.response;
+package dev.com.bedev.api.profile.dto.response;
 
 import dev.com.bedev.domain.enums.DevelopmentPart;
 import dev.com.bedev.domain.profile.Profile;
-import dev.com.bedev.domain.project.Project;
+import dev.com.bedev.domain.uploadfile.UploadFile;
 import lombok.Builder;
 import lombok.Data;
 
@@ -31,7 +31,7 @@ public class ProfileResponseDto {
 
     public static ProfileResponseDto from(Profile profile) {
         return ProfileResponseDto.builder()
-                .image(profile.getImage())
+                .image(profile.getImage().getImageUrl())
                 .schoolId(profile.getSchoolId())
                 .department(profile.getDepartment())
                 .email(profile.getEmail())
