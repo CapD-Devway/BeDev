@@ -6,6 +6,9 @@ build/
 !**/src/test/**/build/
 *.json
 
+generated
+firebasekey.json
+
 ### STS ###
 .apt_generated
 .classpath
