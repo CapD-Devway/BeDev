@@ -17,3 +17,10 @@ spring:
     defer-datasource-initialization: true
 app:
   firebase-file: ${FIREBASE_FILE}
+  cloud:
+    gcp:
+      storage:
+        credentials:
+          location: ${LOCATION}
+        project-id: ${PROJECT_ID}
+        bucket: ${BUCKET}
