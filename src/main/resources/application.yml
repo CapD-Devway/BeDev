@@ -15,8 +15,6 @@ spring:
         format_sql: true
         use_sql_comments: true
     defer-datasource-initialization: true
-app:
-  firebase-file: ${FIREBASE_FILE}
   cloud:
     gcp:
       storage:
@@ -24,3 +22,6 @@ app:
           location: ${LOCATION}
         project-id: ${PROJECT_ID}
         bucket: ${BUCKET}
+
+app:
+  firebase-file: ${FIREBASE_FILE}
