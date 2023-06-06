@@ -8,7 +8,6 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.0.5'
     id 'io.spring.dependency-management' version '1.1.0'
-    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'dev.com'
@@ -48,23 +47,3 @@ tasks.named('test') {
 
 
 def generated = 'src/main/generated'
-
-querydsl {
-    jpa = true
-    querydslSourcesDir = generated
-}
-sourceSets {
-    main.java.srcDir generated
-}
-tasks.compileQuerydsl.dependsOn(clean);
-
-compileQuerydsl{
-    options.annotationProcessorPath = configurations.querydsl
-}
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-    querydsl.extendsFrom compileClasspath
-}
