@@ -1,16 +1,15 @@
 package dev.com.bedev.api.config;
 
 
-import com.google.firebase.auth.FirebaseAuth;
 
-import dev.com.bedev.api.filter.JwtFilter;
-import dev.com.bedev.api.user.service.UserService;
+import dev.com.bedev.api.filter.AuthFilterContainer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -19,23 +18,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final FirebaseAuth firebaseAuth;
-    private final UserService userService;
+    private final AuthFilterContainer authFilterContainer;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
                 httpBasic().disable()
                 .csrf().disable()
-                .authorizeRequests()
-                .requestMatchers("/login","/").permitAll()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeHttpRequests()
+                .requestMatchers("/findall").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(new JwtFilter(userService, firebaseAuth), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(authFilterContainer.getFilter()
+                        , UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
-
-
 
 }

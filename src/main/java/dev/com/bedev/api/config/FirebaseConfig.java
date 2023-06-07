@@ -8,9 +8,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 @Configuration
 public class FirebaseConfig {
@@ -19,16 +20,18 @@ public class FirebaseConfig {
     private String firebaseKey;
     @Bean
     public FirebaseAuth firebaseAuth() throws IOException {
-        System.out.println("Initializing Firebase.");
-        FileInputStream serviceAccount =
-                new FileInputStream(firebaseKey);
-
         FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount()))
                 .build();
-
         FirebaseApp.initializeApp(options);
         return FirebaseAuth.getInstance(FirebaseApp.getInstance());
+    }
+
+    private InputStream serviceAccount() throws IOException{
+        ClassPathResource resource = new ClassPathResource(firebaseKey);
+        if(resource.exists()) {
+            return resource.getInputStream();
+        } throw new RuntimeException("firebase 키가 존재하지 않습니다");
     }
 
 
