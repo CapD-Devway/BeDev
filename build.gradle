@@ -13,13 +13,19 @@ plugins {
 group = 'dev.com'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
-
+ext {
+    set('springCloudGcpVersion', "4.1.0")
+}
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
 }
-
+dependencyManagement {
+    imports {
+        mavenBom "com.google.cloud:spring-cloud-gcp-dependencies:${springCloudGcpVersion}"
+    }
+}
 repositories {
     mavenCentral()
 }
@@ -34,6 +40,7 @@ dependencies {
     implementation group: 'com.google.firebase', name: 'firebase-admin', version: '8.0.1'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     annotationProcessor 'org.projectlombok:lombok'
+    implementation 'com.google.cloud:spring-cloud-gcp-starter-storage'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
