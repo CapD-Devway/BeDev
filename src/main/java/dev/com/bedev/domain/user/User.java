@@ -1,7 +1,6 @@
 package dev.com.bedev.domain.user;
 
 import dev.com.bedev.domain.date.BaseTimeEntity;
-import dev.com.bedev.domain.post.Post;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 @Getter
 @Entity
@@ -27,13 +25,21 @@ public class User extends BaseTimeEntity implements UserDetails {
     private String picture;
     @Id
     @Column(nullable = false)
-    private String userName;
-
+    private String uid;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
-        return null;
+        Collection<GrantedAuthority> grantedAuthority = new ArrayList<>();
+        grantedAuthority.add(new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                return "User";
+            }
+        });
+
+        return grantedAuthority;
     }
+
+
     @Override
     public String getPassword() {
         return null;
@@ -41,31 +47,27 @@ public class User extends BaseTimeEntity implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return uid;
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
 

@@ -3,8 +3,6 @@ package dev.com.bedev.api.user.controller;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
-import com.google.firebase.auth.UserInfo;
-import dev.com.bedev.api.user.dto.request.UserRequestDto;
 import dev.com.bedev.api.user.dto.response.UserResponseDto;
 import dev.com.bedev.api.user.service.UserService;
 import dev.com.bedev.api.util.RequestUtil;
@@ -50,5 +48,11 @@ public class UserController {
     public UserResponseDto  getUserMe(Authentication authentication) {
         User customUser = ((User) authentication.getPrincipal());
         return UserResponseDto.from(customUser);
+    }
+
+    @GetMapping("/findall")
+    public ResponseEntity<?> findall(){
+        List<User> user = userService.findall();
+        return ResponseEntity.ok().body(user);
     }
 }
