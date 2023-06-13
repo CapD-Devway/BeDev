@@ -22,6 +22,5 @@ spring:
           location: ${LOCATION}
         project-id: ${PROJECT_ID}
         bucket: ${BUCKET}
-
 app:
   firebase-file: ${FIREBASE_FILE}

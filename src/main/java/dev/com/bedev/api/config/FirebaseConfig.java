@@ -18,13 +18,18 @@ public class FirebaseConfig {
     @Value("${app.firebase-file}")
     private String firebaseKey;
 
+
+
+
     @Bean
     public FirebaseAuth firebaseAuth() throws IOException {
-        FileInputStream refreshToken = new FileInputStream(firebaseKey);
+        FileInputStream serviceAccount =
+                new FileInputStream(firebaseKey);
 
         FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.getApplicationDefault().fromStream(refreshToken))
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
+
         FirebaseApp.initializeApp(options);
         return FirebaseAuth.getInstance(FirebaseApp.getInstance());
     }
